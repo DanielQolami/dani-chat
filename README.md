@@ -15,7 +15,7 @@ in the meanwhile the socket listens to the new messages and appends them to the 
 the socket is written in pure javascript and no library is used for it.
 
 #### technologies used:
-vue 3 - vite 5 - vueUse - vuetify - vue-i18n - axios - vue-toastification
+Vue 3 - Vite 5 - Pinia - VueUse - Vuetify - Vue-i18n - Axios - Vue-toastification - Typescript
 
 ##### responsive UI:
 Yes, it is responsive.
@@ -23,6 +23,8 @@ Yes, it is responsive.
 it is considered, but the internet standard is not to use. (to use, you can set [dir="rtl"] on the html tag)
 
 #### hope you enjoy this project
+
+
 
 ## Recommended IDE Setup
 
