@@ -5,6 +5,13 @@ Chat page, created with vue 3 in vite 5.
 
 I have made this chat for the company I'm working in. But for the purposes of making the code public, I have removed all the "url"s in the project, so that anyone can use the code and/or improve this code.
 
+### hints:
+the folders and files are structured in a way that you can easily start using.
+
+the codes inside the "useChat" composable, are written in a way that they can be used in other codebases (like vanilla javascript, react, svelte & ...).
+
+with a little bit knowledge of Vue.js, you can change & use the codes inside vue components in your own codebase. 
+
 ### how it works
 
 when entering the page, an api is called to fetch the chatlist of the current user. then it shows them to the user.
