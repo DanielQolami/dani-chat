@@ -19,6 +19,8 @@ vue 3 - vite 5 - vueUse - vuetify - vue-i18n - axios - vue-toastification
 
 ##### responsive UI:
 Yes, it is responsive.
+##### rtl:
+it is considered, but the internet standard is not to use. (to use, you can set [dir="rtl"] on the html tag)
 
 #### hope you enjoy this project
 
