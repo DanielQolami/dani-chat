@@ -7,7 +7,7 @@ I have made this chat for the company I'm working in. But for the purposes of ma
 
 [demo](https://dani-chat.vercel.app/).
 
-I repeat, this is only the UI. if you want functionality, you have to do it, yourself.
+I repeat, this is only the UI, you can't send/receive messages. and if you want functionality, you have to do it, yourself.
 
 ### hints:
 the folders and files are structured in a way that you can easily start using.
