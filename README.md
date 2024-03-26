@@ -10,7 +10,7 @@ the folders and files are structured in a way that you can easily start using.
 
 the codes inside the "useChat" composable, are written in a way that they can be used in other codebases (like vanilla javascript, react, svelte & ...).
 
-useChat file contains:
+useChat file contains these composables:
 1) useWebSocket
 2) useDOM
 3) useChatDate
@@ -18,14 +18,14 @@ useChat file contains:
 
 with a little bit knowledge of Vue.js, you can change & use the codes inside vue components in your own codebase.
 
-some styles and components are used from "vuetify" library. if you are using a different UI library, you have to change them. (inside vue components & useDOM composable: VAvatar & VChip & v-icon)
+some styles and components are used from "vuetify" library. if you are using a different UI library, you have to change them. (inside vue components & useDOM composable: VAvatar & VChip & VIcon)
 
 ### how it works
 
 when entering the page, an api is called to fetch the chatlist of the current user. then it shows them to the user.
 by clicking on the chat, the chat ID is set in the url. by watching the url, we set the current Chat to that ID & fetch the previous messages.
 
-in the meanwhile the socket listens to the new messages and appends them to the chatList.
+in the meanwhile the socket listens to the new messages and appends them to the chatList, using useDOM.
 
 the socket is written in pure javascript and no library is used for it. (I wanted to use "socket.io-client", but it didn't work with our back-end socket)
 
