@@ -5,6 +5,10 @@ Chat page, created with vue 3 in vite 5.
 
 I have made this chat for the company I'm working in. But for the purposes of making the code public, I have removed all the unnecessary code in the project, so that anyone can use the code and/or improve this code.
 
+[demo](https://dani-chat.vercel.app/).
+
+I repeat, this is only the UI. if you want functionality, you have to do it, yourself.
+
 ### hints:
 the folders and files are structured in a way that you can easily start using.
 
