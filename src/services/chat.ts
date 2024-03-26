@@ -15,6 +15,9 @@ export default {
     try {
       // const res = await axios.get(`${chatEndpoint}/list`);
       // return res.data.data as Conversation[];
+
+      const now = new Date().getTime();
+
       return [
           {
             "id": 1,
@@ -25,7 +28,7 @@ export default {
             "title": null,
             "icon": "https://www.interviewmagazine.com/wp-content/uploads/2020/09/Interview_digital_web_2020_sept_Lana_Del_Rey_3.jpg",
             "created_at": 1709639921,
-            "updated_at": 1711347997,
+            "updated_at": now,
             "last_seen_id": 2,
             "users": [
               {
@@ -52,7 +55,7 @@ export default {
                 "Never was there ever a girl so pretty",
               "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
-              "created_at": 1711347997
+              "created_at": now
             }
           },
           {
@@ -64,7 +67,7 @@ export default {
             "title": null,
             "icon": "https://upload.wikimedia.org/wikipedia/commons/5/52/Adele_for_Vogue_in_2021.png",
             "created_at": 1709735599,
-            "updated_at": 1710599647,
+            "updated_at": now - 200_000,
             "last_seen_id": 3,
             "users": [
               {
@@ -91,7 +94,7 @@ export default {
                 "Watched it pour as I touched your face",
               "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
-              "created_at": 1710599647
+              "created_at": now - 200_000
             }
           },
           {
@@ -155,6 +158,8 @@ export default {
         })
       }
 
+      const now = new Date().getTime();
+
       const messageList: Record<number, ConversationWithMessageList> = {
         1: {
           "id": 1,
@@ -165,7 +170,7 @@ export default {
           "title": null,
           "icon": null,
           "created_at": 1709639921,
-          "updated_at": 1711347997,
+          "updated_at": now,
           "last_seen_id": 2,
           "users": [
             {
@@ -192,7 +197,7 @@ export default {
               "content": "Diet mountain dew, baby, New York City\nNever was there ever a girl so pretty",
               "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
-              "created_at": 1711347997
+              "created_at": now
             },
             {
               "id": 3,
@@ -202,7 +207,7 @@ export default {
               "content": "It's really Cool.",
               "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
-              "created_at": 1710599499
+              "created_at": now - 100_000
             },
             {
               "id": 2,
@@ -211,8 +216,8 @@ export default {
               "guest_id": null,
               "content": "This is the album art of the \"Salvatore\" song",
               "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
-              "type": "image",
-              "created_at": 1711347200
+              "type": "text",
+              "created_at": now - 200_000
             },
             {
               "id": 1,
@@ -222,7 +227,7 @@ export default {
               "content": "https://i.pinimg.com/736x/57/44/c8/5744c856d909351c49e87b9b57584a62.jpg",
               "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "image",
-              "created_at": 1711347000
+              "created_at": now - 300_000
             },
           ],
         },
@@ -235,7 +240,7 @@ export default {
           "title": null,
           "icon": null,
           "created_at": 1709735599,
-          "updated_at": 1710599647,
+          "updated_at": now - 200_000,
           "last_seen_id": 3,
           "users": [
             {
@@ -263,7 +268,7 @@ export default {
                 "Watched it pour as I touched your face",
               "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
-              "created_at": 1710599647
+              "created_at": now - 200_000
             },
             {
               "id": 3,
