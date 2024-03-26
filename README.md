@@ -3,14 +3,22 @@
 Chat page, created with vue 3 in vite 5.
 (UI is inspired by telegram web)
 
-I have made this chat for the company I'm working in. But for the purposes of making the code public, I have removed all the "url"s in the project, so that anyone can use the code and/or improve this code.
+I have made this chat for the company I'm working in. But for the purposes of making the code public, I have removed all the unnecessary code in the project, so that anyone can use the code and/or improve this code.
 
 ### hints:
 the folders and files are structured in a way that you can easily start using.
 
 the codes inside the "useChat" composable, are written in a way that they can be used in other codebases (like vanilla javascript, react, svelte & ...).
 
-with a little bit knowledge of Vue.js, you can change & use the codes inside vue components in your own codebase. 
+useChat file contains:
+1) useWebSocket
+2) useDOM
+3) useChatDate
+4) useVoiceRecorder
+
+with a little bit knowledge of Vue.js, you can change & use the codes inside vue components in your own codebase.
+
+some styles and components are used from "vuetify" library. if you are using a different UI library, you have to change them. (inside vue components & useDOM composable: VAvatar & VChip & v-icon)
 
 ### how it works
 
@@ -19,10 +27,10 @@ by clicking on the chat, the chat ID is set in the url. by watching the url, we 
 
 in the meanwhile the socket listens to the new messages and appends them to the chatList.
 
-the socket is written in pure javascript and no library is used for it.
+the socket is written in pure javascript and no library is used for it. (I wanted to use "socket.io-client", but it didn't work with our back-end socket)
 
 #### technologies used:
-Vue 3 - Vite 5 - Pinia - VueUse - Vuetify - Vue-i18n - Axios - Vue-toastification - Typescript
+Vue 3 - Vite 5 - Typescript - Pinia - VueUse - Vuetify - Vue-i18n - Axios - Vue-toastification
 
 ##### responsive UI:
 Yes, it is responsive.

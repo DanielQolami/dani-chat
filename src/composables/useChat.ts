@@ -23,6 +23,7 @@ type CreateChaparDateGroupWithChaparArgs = {
   insertWhereInChaparsInner: "afterbegin" | "beforeend",
   msg: Message
 };
+type VIconArgs = { mdiIcon: string, ariaLabel?: string };
 
 export function useChatDate() {
   const { formatDate, removeDoubleQuotes } = useString();
@@ -86,6 +87,8 @@ export function useChatDate() {
 }
 
 export function useConversation() {
+  const chatStore = useChatStore();
+
   /**
    * title to show as the conversation title.
    *
@@ -100,7 +103,7 @@ export function useConversation() {
 
     // NEEDS ATTENTION
     const notMeUser = conversation.users.find((user) => {
-      return user.user_id !== 30595; // 30595 is my id
+      return user.user_id !== chatStore.user.user_id;
     });
 
     if (notMeUser?.full_name) return notMeUser.full_name;
@@ -133,6 +136,19 @@ export function useDOM() {
   // NEEDS ATTENTION: this function can be shortened
   // multiple functions WITHIN this function can exist.
   function createChaparContentWrapper(msg: MessageToDisplay) {
+    function createVIcon(args: VIconArgs) {
+      const vIcon = document.createElement("i");
+      vIcon.classList.add(
+        "mdi", "v-icon", "notranslate", "v-theme--light", "v-icon--size-x-small",
+        "chapar__msg__status-indicator", "chapar__msg__status-outgoing",
+      );
+      vIcon.classList.add(args.mdiIcon);
+      vIcon.ariaHidden = args.ariaLabel ? "false" : "true";
+      if (args.ariaLabel) vIcon.ariaLabel = args.ariaLabel;
+
+      return vIcon;
+    }
+
     // .chapar-content-wrapper
     const chaparContentWrapperDiv = document.createElement("div");
     chaparContentWrapperDiv.classList.add("chapar-content-wrapper");
@@ -239,27 +255,10 @@ export function useDOM() {
     timeEl.classList.add("chapar__message__time");
     timeEl.dateTime = formatDate(checkIfTimestampIsMilliseconds(msg.created_at), { dateFormat: 'YYYY-MM-DD HH:mm' });
     timeEl.textContent = formatDate(checkIfTimestampIsMilliseconds(msg.created_at), { dateFormat: "HH:mm" });
-    const outgoingIcon = document.createElement("i");
-    outgoingIcon.classList.add(
-      "mdi-clock-outline", "mdi", "v-icon", "notranslate", "v-theme--light", "v-icon--size-x-small",
-      "chapar__msg__status-indicator", "chapar__msg__status-outgoing",
-    );
-    outgoingIcon.ariaHidden = "false";
-    outgoingIcon.ariaLabel = "sending message";
-    const sentIcon = document.createElement("i");
-    sentIcon.classList.add(
-      "mdi-check", "mdi", "v-icon", "notranslate", "v-theme--light", "v-icon--size-x-small",
-      "chapar__msg__status-indicator", "chapar__msg__status-send",
-    );
-    sentIcon.ariaHidden = "false";
-    sentIcon.ariaLabel = "message sent";
-    const readIcon = document.createElement("i");
-    readIcon.classList.add(
-      "mdi-check-all", "mdi", "v-icon", "notranslate", "v-theme--light", "v-icon--size-x-small",
-      "chapar__msg__status-indicator", "chapar__msg__status-read",
-    );
-    readIcon.ariaHidden = "false";
-    readIcon.ariaLabel = "message read";
+    // icons: is-going, sent, read
+    const outgoingIcon = createVIcon({ mdiIcon: "mdi-clock-outline", ariaLabel: "sending message" });
+    const sentIcon = createVIcon({ mdiIcon: "mdi-check", ariaLabel: "message sent" });
+    const readIcon = createVIcon({ mdiIcon: "mdi-check-all", ariaLabel: "message read" });
 
     timeContainerDiv.append(timeEl, outgoingIcon, sentIcon, readIcon);
     // end timeContainer
@@ -706,7 +705,7 @@ export function useWebSocket() {
 export function useVoice() {
   let mediaRecorder: MediaRecorder;
   let audioChunks: Blob[] = [];
-  let durationInterval: NodeJS.Timeout | number | undefined;
+  let durationInterval: number | undefined;
 
   const audioBlob = shallowRef<string | undefined>(undefined);
   const voiceRecordingDurationSeconds = shallowRef<number>(0);

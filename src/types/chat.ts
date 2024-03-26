@@ -26,10 +26,10 @@ export type ConversationWithMessageList = Omit<Conversation, "message"> & {
 // type of the message
 export type ChatMessageType = "text" | GeneralFileType;
 type ChatMessageDetails = {
-  file_name: string,
+  file_name: string | null,
   body: string,
   size: number,
-  mime_type: string,
+  mime_type: string | null,
   duration: number,
 };
 export type Message = {

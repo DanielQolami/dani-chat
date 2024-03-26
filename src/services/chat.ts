@@ -46,12 +46,11 @@ export default {
             "message": {
               "id": 2,
               "chat_id": 1,
-              "message_id": 2,
               "user_id": 2,
               "guest_id": null,
               "content": "Diet mountain dew, baby, New York City\n" +
                 "Never was there ever a girl so pretty",
-              "details": "",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
               "created_at": 1711347997
             }
@@ -86,12 +85,11 @@ export default {
             "message": {
               "id": 4,
               "chat_id": 2,
-              "message_id": 4,
               "user_id": 3,
               "guest_id": null,
               "content": "But I set fire to the rain\n" +
                 "Watched it pour as I touched your face",
-              "details": "",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
               "created_at": 1710599647
             }
@@ -126,11 +124,10 @@ export default {
             "message": {
               "id": 3,
               "chat_id": 3,
-              "message_id": 3,
               "user_id": 1,
               "guest_id": null,
-              "content": "No!",
-              "details": "",
+              "content": "Yeah, Why not",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
               "created_at": 1710599499
             }
@@ -144,12 +141,12 @@ export default {
   },
   async getChatMessages(chatId: number) {
     try {
-      // const res = await axios.get(`${chatEndpoint}/show/${chatId}`);
+      // const res = await axios.get(`${chatEndpoint}/${chatId}`);
       // return res.data.data as ConversationWithMessageList;
       function dummyFn() {
         return new Promise((resolve, reject) => {
           if (false) {
-            reject('The input must be numbers');
+            reject('code not reachable.');
           } else {
             setTimeout(() => {
               resolve(messageList[chatId]);
@@ -188,25 +185,42 @@ export default {
           ],
           "messages": [
             {
-              "id": 2,
+              "id": 4,
               "chat_id": 1,
-              "message_id": 2,
               "user_id": 2,
               "guest_id": null,
-              "content": "Diet mountain dew, baby, New York City\n" +
-                "Never was there ever a girl so pretty",
-              "details": "",
+              "content": "Diet mountain dew, baby, New York City\nNever was there ever a girl so pretty",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
               "created_at": 1711347997
             },
             {
+              "id": 3,
+              "chat_id": 1,
+              "user_id": 1,
+              "guest_id": null,
+              "content": "It's really Cool.",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
+              "type": "text",
+              "created_at": 1710599499
+            },
+            {
+              "id": 2,
+              "chat_id": 1,
+              "user_id": 2,
+              "guest_id": null,
+              "content": "This is the album art of the \"Salvatore\" song",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
+              "type": "image",
+              "created_at": 1711347200
+            },
+            {
               "id": 1,
               "chat_id": 1,
-              "message_id": 1,
               "user_id": 2,
               "guest_id": null,
               "content": "https://i.pinimg.com/736x/57/44/c8/5744c856d909351c49e87b9b57584a62.jpg",
-              "details": "",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "image",
               "created_at": 1711347000
             },
@@ -243,24 +257,32 @@ export default {
             {
               "id": 4,
               "chat_id": 2,
-              "message_id": 4,
               "user_id": 3,
               "guest_id": null,
               "content": "But I set fire to the rain\n" +
                 "Watched it pour as I touched your face",
-              "details": "",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
               "created_at": 1710599647
             },
             {
+              "id": 3,
+              "chat_id": 2,
+              "user_id": 1,
+              "guest_id": null,
+              "content": "Hello, Dear.",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
+              "type": "text",
+              "created_at": 1710599499
+            },
+            {
               "id": 2,
               "chat_id": 2,
-              "message_id": 2,
               "user_id": 3,
               "guest_id": null,
               "content": "Hello, it's me\n" +
                 "I was wondering if after all these years you'd like to meet",
-              "details": "",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
               "created_at": 1710599000
             },
@@ -297,34 +319,31 @@ export default {
             {
               "id": 3,
               "chat_id": 3,
-              "message_id": 3,
               "user_id": 1,
               "guest_id": null,
-              "content": "No!",
-              "details": "",
+              "content": "Yeah, Why not",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
               "created_at": 1710599499
             },
             {
               "id": 2,
               "chat_id": 3,
-              "message_id": 2,
               "user_id": 4,
               "guest_id": null,
               "content": "If I knew it all then would I do it again?\n" +
                 "Would I do it again?",
-              "details": "",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "text",
               "created_at": 1710599491
             },
             {
               "id": 1,
               "chat_id": 3,
-              "message_id": 1,
               "user_id": 4,
               "guest_id": null,
               "content": "https://ts4.tarafdari.com/contents/user229795/content-sound/billie_eilish_-_everything_i_wanted.mp3",
-              "details": "",
+              "details": {"file_name":null,"size":0, "body": "","mime_type":null,"duration":0},
               "type": "audio",
               "created_at": 1710599000
             },
