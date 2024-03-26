@@ -153,14 +153,17 @@ const isSendBtnShown = shallowRef(true);
 const isVoiceContainerShown = shallowRef(false);
 function switchSendVoiceBtn(event: MouseEvent) {
   event.preventDefault();
+
+  if (!isSendBtnShown.value) hideVoiceContainer();
+
   isSendBtnShown.value = !isSendBtnShown.value;
 }
 function toggleVoiceContainerVisibility() {
   isVoiceContainerShown.value = !isVoiceContainerShown.value;
 }
-/*function hideVoiceContainer() {
+function hideVoiceContainer() {
   isVoiceContainerShown.value = false;
-}*/
+}
 // Voice Recording
 const {
   audioInputs: microphoneList,
