@@ -224,7 +224,7 @@ export function useDOM() {
       else {
         // for file
         const aEl = document.createElement("a");
-        aEl.classList.add("max-w-full", "d-block", "px-2");
+        aEl.classList.add("max-w-full", "d-block", "px-2", "break-words");
         aEl.dir = "ltr";
         aEl.href = msg.content;
         const fileName = msg.details.file_name || msg.content;

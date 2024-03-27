@@ -4,7 +4,7 @@ import ChatConversationContainer from "@/components/ChatConversationContainer.vu
 import { useToast } from "vue-toastification";
 import { useChatStore } from "@/stores/chat.ts";
 import { useRoute, useRouter } from "vue-router";
-import { watch, useCssModule, computed } from "vue";
+import { watch, useCssModule, computed, onMounted } from "vue";
 import { useDisplay } from "vuetify";
 import { useWebSocket } from "@/composables/useChat.ts";
 
@@ -40,15 +40,16 @@ async function fetchChatList() {
     toast.error(error.body?.data?.msg || error.body?.message || error.message || "fetchChatList Error!");
   }
 }
-async function setCurrentConversation(conversationId: number) {
+async function setCurrentConversation(conversationId?: number) {
   chatStore.setCurrentConversation(conversationId);
 }
 function checkUrlHashAndFetchMessages() {
   const routeHash = route.hash;
   if (!routeHash?.startsWith('#')) {
-    router.replace({
+    router.push({
       hash: undefined,
     });
+    setCurrentConversation();
     return;
   }
 
@@ -69,6 +70,11 @@ watch(
       immediate: false,
     }
 );
+
+onMounted(() => {
+  const appDiv = document.getElementById("app");
+  appDiv!.classList.remove("overflow-y-auto");
+});
 
 // right column: chat__chapar-section
 // left column: chat__chat-list

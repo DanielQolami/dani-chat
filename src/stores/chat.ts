@@ -54,13 +54,18 @@ export const useChatStore = defineStore("chat", () => {
     }
   }
   function setCurrentConversation(conversationId?: number) {
-    if (!conversationId) currentConversation.value = undefined;
+    if (!conversationId) {
+      currentConversation.value = undefined;
 
-    currentConversation.value = chatList.value.find((chat) => {
-      return chat.id === conversationId;
-    });
+      setChatListColumnVisibility(true);
+    }
+    else {
+      currentConversation.value = chatList.value.find((chat) => {
+        return chat.id === conversationId;
+      });
 
-    setChatListColumnVisibility(false);
+      setChatListColumnVisibility(false);
+    }
   }
 
   /**

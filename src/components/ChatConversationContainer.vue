@@ -369,13 +369,13 @@ watch(
         <div class="btn-send-container">
           <v-btn v-if="isSendBtnShown"
                  variant="flat" color="primary" :icon="true" @click="sendText"
-                 @click.right="switchSendVoiceBtn"
+                 @contextmenu="switchSendVoiceBtn"
                  :title="t('glossaries.actions.send_thing', { thing: t('glossaries.document.message') })">
             <v-icon icon="mdi-send"></v-icon>
           </v-btn>
           <v-btn v-else
                  variant="flat" color="primary" :icon="true" @click="toggleVoiceContainerVisibility"
-                 @click.right="switchSendVoiceBtn"
+                 @contextmenu="switchSendVoiceBtn"
                  :title="t('glossaries.socialMedia.voice')">
             <v-icon icon="mdi-microphone"></v-icon>
           </v-btn>

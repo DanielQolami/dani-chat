@@ -147,3 +147,7 @@
 [dir="rtl"] .chapar.is-in.can-have-tail .new-chapar__tail {
     transform: rotateY(0deg);
 }
+
+.break-words {
+    word-break: break-word;
+}
