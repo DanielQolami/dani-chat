@@ -433,6 +433,7 @@ watch(
 .chat__inputs {
   max-width: var(--chat-inputs-container-width);
   padding-top: 0.1rem;
+  user-select: none;
 }
 
 .chat__input-container {

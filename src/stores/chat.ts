@@ -70,8 +70,8 @@ export const useChatStore = defineStore("chat", () => {
 
   /**
    * fetches messages by the chat ID.
-   * if chat with the given ID doesn't exist in our "chatList",
-   * then, it creates a chat object and assigns the fetched messages to it.
+   * if chat with the given ID doesn't exist in our "chatList", then,
+   *    it creates a chat object and assigns the fetched messages to it.
    * @param conversationId
    */
   async function fetchMessages(conversationId: number) {
@@ -142,7 +142,7 @@ export const useChatStore = defineStore("chat", () => {
    * 3) unshifts the received "message" to the previous messageList
    * @param message
    */
-  function unshiftToExistingMessages(message: Message) {
+  function unshiftToExistingMessageList(message: Message) {
     const conversation = findConversationById(message.chat_id);
     if (!conversation) return;
 
@@ -156,8 +156,8 @@ export const useChatStore = defineStore("chat", () => {
   /**
    * changes last message of a chat object.
    * 1) checks if chat exists
-   * 2) if exists, changes "last message" & "updated_at"
-   * 3) else doesn't exist, fetches messageList
+   * 2) if exists, changes "last message" & "updated_at" & "last_seen_id"
+   * 3) else, doesn't exist, fetches messageList
    * @param message
    */
   async function changeLastMessageOfChatObject(message: Message) {
@@ -175,14 +175,14 @@ export const useChatStore = defineStore("chat", () => {
   }
 
   /**
-   * consisting of "unshiftToExistingMessages" & "changeLastMessageOfChatObject" functions.
+   * consisting of "unshiftToExistingMessageList" & "changeLastMessageOfChatObject" functions.
    *
    * adds the message to messageList for that chat_id
    * also, changes the "last_message" of the chat object.
    * @param message
    */
   async function addMessageToChat(message: Message) {
-    unshiftToExistingMessages(message);
+    unshiftToExistingMessageList(message);
     await changeLastMessageOfChatObject(message);
   }
 

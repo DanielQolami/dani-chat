@@ -2,7 +2,7 @@ import { useTimeAgo } from "@vueuse/core";
 import { useString } from "@/composables/useString.ts";
 import { useChatStore } from "@/stores/chat.ts";
 import { useNumbers } from "@/composables/useNumbers.ts";
-import { shallowRef } from "vue";
+import { shallowRef, computed } from "vue";
 import type {
   Conversation,
   ConversationWithMessageList,
@@ -117,12 +117,41 @@ export function useConversation() {
    * else returns `false`
    * @param conversation
    */
-  function hasUnreadMessage(conversation: Conversation): boolean {
-    return conversation.last_seen_id > conversation.message.id;
+  const hasUnreadMessage = computed(() => {
+      return (conversation: Conversation): boolean => {
+        return conversation.last_seen_id < conversation.message.id;
+      };
+    });
+
+  // ----------------------------------- message observer api
+  // Create an observer instance
+  let messageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const messageId = entry.target.getAttribute("data-mid");
+        const messageChatId = entry.target.getAttribute("data-chat-id");
+
+        const currentChat = chatStore.currentConversation;
+
+        if (currentChat?.id === Number(messageChatId)) {
+          if (messageId && currentChat.last_seen_id > Number(messageId)) {
+            console.log('Message observed: ', messageId, "chatId ", messageChatId);
+          }
+        }
+
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.01 });  // threshold: when 0.01 of the div is visible
+
+  // Function to start observing a message div
+  function observeMessage(messageDiv: HTMLDivElement) {
+    messageObserver.observe(messageDiv);
   }
 
   return {
     computeConversationTitle, hasUnreadMessage,
+    observeMessage,
   };
 }
 
@@ -130,6 +159,7 @@ export function useDOM() {
   const chatStore = useChatStore();
   const { formatDate } = useString();
   const { checkIfTimestampIsMilliseconds } = useNumbers();
+  const { observeMessage } = useConversation();
 
   // functions
 
@@ -297,10 +327,13 @@ export function useDOM() {
     chaparDiv.dataset.mid = msg.id+"";
     chaparDiv.dataset.userid = msg.user_id+"";
     chaparDiv.dataset.timestamp = msg.created_at+"";
+    chaparDiv.dataset.chatId = msg.chat_id+"";
 
     const chaparContentWrapper = createChaparContentWrapper(msg);
 
     chaparDiv.insertAdjacentElement("beforeend", chaparContentWrapper);
+
+    observeMessage(chaparDiv);
     return chaparDiv;
   }
 
@@ -490,18 +523,23 @@ export function useDOM() {
     if (!chaparDiv) return;
     chaparDiv.scrollIntoView({ block: "end", behavior: args.smoothBehavior ? "smooth" : "instant" });
   }
-  function createAndAppendChaparDateGroupToChaparInner({ msg, insertWhereInChaparsInner }: CreateChaparDateGroupWithChaparArgs) {
-    const date = formatDate(checkIfTimestampIsMilliseconds(msg.created_at));
+  async function createAndAppendChaparDateGroupToChaparInner({ msg, insertWhereInChaparsInner }: CreateChaparDateGroupWithChaparArgs) {
+    try {
+      const date = formatDate(checkIfTimestampIsMilliseconds(msg.created_at));
 
-    const dateGroupDiv = createChaparsDateGroup({ date });
-    const chaparsGroupDiv = createChaparsGroupBasedOnUser([msg]);
+      const dateGroupDiv = createChaparsDateGroup({ date });
+      const chaparsGroupDiv = createChaparsGroupBasedOnUser([msg]);
 
-    dateGroupDiv.insertAdjacentElement("beforeend", chaparsGroupDiv);
+      dateGroupDiv.insertAdjacentElement("beforeend", chaparsGroupDiv);
 
-    const chaparsInnerEl = document.getElementById("chapars-inner");
-    chaparsInnerEl?.insertAdjacentElement(insertWhereInChaparsInner, dateGroupDiv);
+      const chaparsInnerEl = document.getElementById("chapars-inner");
+      chaparsInnerEl?.insertAdjacentElement(insertWhereInChaparsInner, dateGroupDiv);
 
-    return dateGroupDiv;
+      return dateGroupDiv;
+    }
+    catch (error) {
+      throw error;
+    }
   }
 
   /**
@@ -510,7 +548,7 @@ export function useDOM() {
    * 3) prepends the divs to "chapars-inner" element.
    * @param config
    */
-  function prependPriorMessagesToDOM(config: { hideLastMsg?: boolean, ChatId: number }) {
+  async function prependPriorMessagesToDOM(config: { hideLastMsg?: boolean, ChatId: number }) {
     const configuration = {
       // if we have attached the last message
       hideLastMessage: config?.hideLastMsg ?? false,
@@ -520,11 +558,11 @@ export function useDOM() {
     const prevMessageList = chatStore.currentConversationMessages(config.ChatId);
     if (!prevMessageList) return;
 
-    let lastDateGroupEl: HTMLDivElement | undefined;
+    let prevDateGroupEl: HTMLDivElement | undefined;
     // let lastChaparGroupEl: HTMLDivElement | undefined;
 
     const chaparsInnerEl = document.getElementById("chapars-inner");
-    lastDateGroupEl = chaparsInnerEl?.querySelector(".chapars-date-group") || undefined;
+    prevDateGroupEl = chaparsInnerEl?.querySelector(".chapars-date-group") || undefined;
 
     // for loop: prepend to chapars-inner (one by one)
     const prevMessagesLength = prevMessageList.length;
@@ -534,7 +572,7 @@ export function useDOM() {
       }
 
       const msg = prevMessageList[i];
-      if (!lastDateGroupEl) {
+      if (!prevDateGroupEl) {
         /*const dateGroupDiv = createChaparsDateGroup({ date });
         const chaparsGroupDiv = createChaparsGroupBasedOnUser([msg]);
 
@@ -542,21 +580,21 @@ export function useDOM() {
         chaparsInnerEl.value?.insertAdjacentElement("afterbegin", dateGroupDiv);
 
         // lastChaparGroupEl = chaparsGroupDiv;
-        lastDateGroupEl = dateGroupDiv;*/
-        lastDateGroupEl = createAndAppendChaparDateGroupToChaparInner({msg, insertWhereInChaparsInner: "afterbegin"} );
+        prevDateGroupEl = dateGroupDiv;*/
+        prevDateGroupEl = await createAndAppendChaparDateGroupToChaparInner({msg, insertWhereInChaparsInner: "afterbegin"} );
       }
       else {
         // NEEDS ATTENTION: DRY code. REFER TO appendMessageToDOM
         const msgDate = formatDate(checkIfTimestampIsMilliseconds(msg.created_at));
-        const dateOfDateGroup = lastDateGroupEl.dataset.groupDate;
+        const dateOfDateGroup = prevDateGroupEl.dataset.groupDate;
 
         // if date is not the same, we add a NEW dateGroup & NEW chaparsGroup
         if (msgDate !== dateOfDateGroup) {
-          lastDateGroupEl = createAndAppendChaparDateGroupToChaparInner({msg, insertWhereInChaparsInner: "afterbegin"});
+          prevDateGroupEl = await createAndAppendChaparDateGroupToChaparInner({msg, insertWhereInChaparsInner: "afterbegin"});
         }
         // if msgDate === DATE of lastDateGroup,
         else {
-          const firstChaparsGroup = lastDateGroupEl.querySelector(".chapars-group");
+          const firstChaparsGroup = prevDateGroupEl.querySelector(".chapars-group");
           // @ts-ignore
           const firstChapar = firstChaparsGroup.querySelector(".chapar");
           // @ts-ignore
@@ -581,7 +619,7 @@ export function useDOM() {
     // scrollToMessage({ smoothBehavior: false, messageId: prevMessageList[0].id });
     const chaparsGroupElementsOnPage = document.querySelectorAll(".chapars-group");
     const lastChaparsGroupEl = chaparsGroupElementsOnPage[chaparsGroupElementsOnPage.length - 1];
-    lastChaparsGroupEl.scrollIntoView({ behavior: "instant", block: "end" });
+    lastChaparsGroupEl?.scrollIntoView({ behavior: "instant", block: "end" });
   }
 
   // return
