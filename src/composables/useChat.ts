@@ -630,11 +630,12 @@ export function useDOM() {
 }
 
 let ws: WebSocket | null = null;
-let reconnectAttempts = 0;
 let userDisconnected = false; // Flag to track user-initiated disconnection
 export function useWebSocket() {
   const chatStore = useChatStore();
   const { appendMessageToDOM } = useDOM();
+
+  let reconnectAttempts = 0;
 
   const connectWebsocket = () => {
     ws = new WebSocket("YOUR_WEBSOCKET");
