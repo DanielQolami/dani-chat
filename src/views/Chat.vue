@@ -49,12 +49,14 @@ function checkUrlHashAndFetchMessages() {
     router.push({
       hash: undefined,
     });
-    setCurrentConversation();
     return;
   }
 
-  const id = routeHash.slice(1);
-  setCurrentConversation(Number(id));
+  if (routeHash) {
+    const id = routeHash.slice(1);
+    const idNum = Number(id);
+    idNum > 0 && setCurrentConversation(idNum);
+  }
 }
 
 // connectWebsocket();
