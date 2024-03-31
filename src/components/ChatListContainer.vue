@@ -123,8 +123,8 @@ function hideChatListColumn() {
                             </time>
                           </div>
                           <div :class="[chatLeftColumn['chat__last-msg'], 'grid gap-2']">
-                            <p v-if="conversation.message.type === 'text'" class="text-start opacity-75 line-clamp-1" dir="auto">{{ conversation.message.content }}</p>
-                            <p v-else class="text-start opacity-75 line-clamp-1" dir="auto">{{ conversation.message.type }}</p>
+                            <p v-if="conversation.message.type === 'text'" :class="[chatLeftColumn['btn__content-text'], 'text-start opacity-75 line-clamp-1']" dir="auto">{{ conversation.message.content }}</p>
+                            <p v-else :class="[chatLeftColumn['btn__content-text'], 'text-start opacity-75 line-clamp-1']" dir="auto">{{ conversation.message.type }}</p>
                             <div :class="['d-flex align-center justify-end', chatLeftColumn['chat__last-msg__badge-container']]">
                               <v-badge v-show="hasUnreadMessage(conversation)" color="info" max="99" inline dir="ltr"></v-badge>
                             </div>
@@ -200,6 +200,9 @@ function hideChatListColumn() {
   height: 0.875rem; /* 14px */
   bottom: 0.025rem;
   inset-inline-end: 0.025rem;
+}
+.btn__content-text {
+  line-height: 1.2rem;
 }
 
 .chat__last-msg {
