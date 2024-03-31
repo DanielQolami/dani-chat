@@ -7,10 +7,10 @@ I have made this chat for the company I'm working in. But for the purposes of ma
 
 [demo](https://dani-chat.vercel.app/).
 
-I repeat, this is only the UI, you can't send/receive messages. and if you want functionality, you have to do it, yourself.
+I repeat, this is only the UI, you can't send/receive messages. and if you want functionality, you have to put your own urls and socket destination.
 
 ### hints:
-the folders and files are structured in a way that you can easily start using.
+the folders and files are structured in a way that you can easily understand and start using.
 
 the codes inside the "useChat" composable, are written in a way that they can be used in other codebases (like vanilla javascript, react, svelte & ...).
 
@@ -20,18 +20,18 @@ useChat file contains these composables:
 3) useChatDate
 4) useVoiceRecorder
 
-with a little bit knowledge of Vue.js, you can change & use the codes inside vue components in your own codebase.
+with a little bit knowledge of Vue.js, you can change & use the codes inside vue components as well. (it is not so complicated)
 
-some styles and components are used from "vuetify" library. if you are using a different UI library, you have to change them. (inside vue components & useDOM composable: VAvatar & VChip & VIcon)
+some styles and components are used from "vuetify" library. if you are using a different UI library, you have to change them. (inside vue components & useDOM composable: also, take care of the veutify components that I used, VAvatar & VChip & VIcon)
 
 ### how it works
 
 when entering the page, an api is called to fetch the chatlist of the current user. then it shows them to the user.
-by clicking on the chat, the chat ID is set in the url. by watching the url, we set the current Chat to that ID & fetch the previous messages.
+by clicking on the chat, the chat ID is set in the url. by watching the url, we set the current Chat to that ID & fetch the previous messages of that chat.
 
 in the meanwhile the socket listens to the new messages and appends them to the chatList, using useDOM.
 
-the socket is written in pure javascript and no library is used for it. (I wanted to use "socket.io-client", but it didn't work with our back-end socket)
+the socket is written in pure javascript and no library is used for it. (I wanted to use "socket.io-client", but it didn't cooperate with our back-end socket)
 
 #### technologies used:
 Vue 3 - Vite 5 - Typescript - Pinia - VueUse - Vuetify - Vue-i18n - Axios - Vue-toastification
@@ -43,6 +43,7 @@ it is considered, but the internet standard is not to use. (to use, you can set 
 
 #### hope you enjoy this project
 
+-----
 
 
 ## Recommended IDE Setup
